@@ -25,7 +25,7 @@ def main():
 
     model = GoogLeNet(class_num=6, aux_logits=False)
     # model.load_weights("./save_weights/myGoogLenet.h5", by_name=True)  # h5 format
-    weights_path = "./save_weights/myGoogLeNet.ckpt"
+    weights_path = "./save_weights/myGoogLeNet50.ckpt"
     assert len(glob.glob(weights_path + "*")), "cannot find {}".format(weights_path)
     model.load_weights(weights_path)
 
@@ -34,8 +34,15 @@ def main():
     for cla in liver_class:
         cla_path = os.path.join(test_dir, cla)
         images = os.listdir(cla_path)
+        pre = {
+            "123": 0,
+            "1234": 0,
+            "4": 0,
+            "5678": 0,
+            "58": 0,
+            "67": 0
+        }
         for image in images:
-            print(image)
             num = num + 1
             image_path_1 = os.path.join(cla_path, image)
 
@@ -68,11 +75,17 @@ def main():
             result = np.squeeze(model.predict(img))
             predict_class = np.argmax(result)
 
+            pre[class_indict[str(predict_class)]] = pre[class_indict[str(predict_class)]] + 1
             if (class_indict[str(predict_class)] == cla):
                 right = right + 1
+        print(pre)
     print(right/num)
 
 if __name__ == "__main__":
     main()
 
-# 0.9439461883408071
+# 30 0.9439461883408071
+
+# 40 0.95254110612855
+
+# 50 0.9745889387144993

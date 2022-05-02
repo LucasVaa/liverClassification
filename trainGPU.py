@@ -33,7 +33,7 @@ def main():
     im_height = 224
     im_width = 224
     batch_size = 32
-    epochs = 30
+    epochs = 50
 
     # class dict
     data_class = [cla for cla in os.listdir(train_dir) if os.path.isdir(os.path.join(train_dir, cla))]
@@ -160,7 +160,7 @@ def main():
                               test_loss.result(),
                               test_accuracy.result() * 100))
         if test_loss.result() < best_test_loss:
-            model.save_weights("./save_weights/myGoogLeNet.ckpt".format(epoch), save_format='tf')
+            model.save_weights("./save_weights/myGoogLeNet" + str(epoch) + ".ckpt".format(epoch), save_format='tf')
 
 
 if __name__ == '__main__':

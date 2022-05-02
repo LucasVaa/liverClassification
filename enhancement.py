@@ -4,6 +4,9 @@ import cv2
 image_path = r"C:\Users\lucas\Documents\nk\Postgraduate\Graduate Year One\deep learning\midterm assignments" \
              r"\liverClassification\data\train\4\4_1.jpg"
 
+out_path = r"C:\Users\lucas\Documents\nk\Postgraduate\Graduate Year One\deep learning\midterm assignments" \
+             r"\liverClassification\data\enhancement"
+
 # UltraSound图像增强
 # 1. 自适应中值滤波-降噪
 # 2. 直方图均值化-图像增强
@@ -101,18 +104,15 @@ def probability_to_histogram(img, prob):
 
 cv2.namedWindow("img", 0)
 cv2.resizeWindow('img', 400, 300)
-cv2.namedWindow("img0", 0)
-cv2.resizeWindow('img0', 400, 300)
 cv2.namedWindow("img1", 0)
 cv2.resizeWindow('img1', 400, 300)
 img = cv2.imread(image_path, 0)
+
+cv2.imwrite(out_path + r"\origin.jpg", img)
 cv2.imshow("img", img)
 
 img0 = adapt_meadian_filter(img, 3, 7)
-cv2.imshow("img0", img0)
-
-prob = pixel_probability(img0)
-img1 = probability_to_histogram(img0, prob)
-cv2.imshow("img1", img1)
+cv2.imwrite(out_path + r"\afterfilter.jpg", img0)
+cv2.imshow("img1", img0)
 
 cv2.waitKey(0)
